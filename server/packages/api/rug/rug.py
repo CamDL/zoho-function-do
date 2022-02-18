@@ -1,11 +1,8 @@
 import os
 import requests
-from dotenv import load_dotenv
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 import json
-
-load_dotenv()
 
 envars = os.environ
 client_id = envars['CLIENT_ID']
