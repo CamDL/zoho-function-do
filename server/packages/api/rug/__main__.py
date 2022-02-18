@@ -31,8 +31,8 @@ def token_saver(token):
 
 def main(args):
     # After updating the token you will most likely want to save it.
-    client = OAuth2Session(client_id, token=token, auto_refresh_url=refresh_url,
-        auto_refresh_kwargs=extra)
+    #client = OAuth2Session(client_id, token=token, auto_refresh_url=refresh_url,
+    #    auto_refresh_kwargs=extra)
     ID = args.get("ID")
-    rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
-    return rug
+    #rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
+    return str(ID)
