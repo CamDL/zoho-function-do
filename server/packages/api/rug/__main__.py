@@ -14,8 +14,11 @@ def token_saver(token):
     os.environ['OAUTH_TOKEN'] = token
 
 def main(args):
-    client_id = os.environ.get('CLIENT_ID')
-    client_secret = os.environ.get('CLIENT_SECRET')
+    try:
+        client_id = os.environ.get('CLIENT_ID')
+        client_secret = os.environ.get('CLIENT_SECRET')
+    except:
+        print('Could not retrieve env vars')
     """
     token = {
         'access_token': envars['ACCESS_TOKEN'],
