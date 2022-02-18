@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 from requests_oauthlib import OAuth2Session
 
 def main(args):
