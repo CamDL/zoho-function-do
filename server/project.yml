@@ -3,3 +3,5 @@ packages:
     actions:
       - name: rug
         runtime: 'python:default'
+        limits:
+          timeout: 9000
