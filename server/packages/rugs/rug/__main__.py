@@ -2,6 +2,9 @@ import os
 from requests_oauthlib import OAuth2Session
 import base64
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def main(args):
     #main({"ID":"3183625000003900011"})
@@ -34,7 +37,7 @@ def main(args):
                 response = client.get(f"https://creator.zoho.com{value}")
                 uri = ("data:" + response.headers['Content-Type'] + ";"
                     + "base64," + str(base64.b64encode(response.content).decode('utf-8')))
-                rug['data'][value + "_URI"] = uri
+                rug['data'][item + "_URI"] = uri
         message = json.dumps(rug)
         return message
     else:
