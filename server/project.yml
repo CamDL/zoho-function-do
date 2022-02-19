@@ -1,5 +1,0 @@
-packages:
-  - name: default
-    actions:
-      - name: rug
-        runtime: 'python:default'
