@@ -5,3 +5,9 @@ packages:
         runtime: 'python:default'
         limits:
           timeout: 9000
+  - name: sample
+    actions:
+      - name: hello
+        runtime: 'python:default'
+        limits:
+          timeout: 9000
