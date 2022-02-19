@@ -36,6 +36,7 @@ def main(args):
                     + "base64," + str(base64.b64encode(response.content).decode('utf-8')))
                 rug['data'][value + "_URI"] = uri
         message = json.dumps(rug)
+        return message
     else:
         message = "No rug could be found. Sorry!"
-    return {"body": message}
+        return {"body": message}
