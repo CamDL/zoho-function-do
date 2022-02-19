@@ -4,15 +4,15 @@ from requests_oauthlib import OAuth2Session
 def main(args):
     #main({"ID":"3183625000003900011"})
     ID = args.get("ID")
-    envars = os.environ
-    client_id = envars['CLIENT_ID']
-    client_secret = envars['CLIENT_SECRET']
+    client_id = os.environ.get('CLIENT_ID')
+    print(client_id)
+    client_secret = os.environ.get('CLIENT_SECRET')
 
     token = {
-        'access_token': envars['ACCESS_TOKEN'],
-        'refresh_token': envars['REFRESH_TOKEN'],
+        'access_token': os.environ.get('ACCESS_TOKEN'),
+        'refresh_token': os.environ.get('REFRESH_TOKEN'),
         'token_type': 'Bearer',
-        'expires_in': envars['EXPIRES_IN'],
+        'expires_in': os.environ.get('EXPIRES_IN'),
     }
     refresh_url = 'https://accounts.zoho.com/oauth/v2/token'
     extra = {
@@ -25,4 +25,4 @@ def main(args):
     client.refresh_token(refresh_url)
 
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
-    return {"body": str(envars)}
+    return {"body": token['expires_in']}
