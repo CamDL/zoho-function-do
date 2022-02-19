@@ -8,9 +8,6 @@ def main(args):
     client_id = envars['CLIENT_ID']
     client_secret = envars['CLIENT_SECRET']
 
-    def token_saver(token):
-        envars['OAUTH_TOKEN'] = token
-
     token = {
         'access_token': envars['ACCESS_TOKEN'],
         'refresh_token': envars['REFRESH_TOKEN'],
@@ -23,7 +20,7 @@ def main(args):
         'client_secret': client_secret,
     }
     client = OAuth2Session(client_id, token=token, auto_refresh_url=refresh_url,
-        auto_refresh_kwargs=extra, token_updater=token_saver)
+        auto_refresh_kwargs=extra)
 
     client.refresh_token(refresh_url)
 
