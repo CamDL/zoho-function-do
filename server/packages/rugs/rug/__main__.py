@@ -25,4 +25,7 @@ def main(args):
     client.refresh_token(refresh_url)
 
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
-    return {"body": token['expires_in']}
+    if rug:
+        return {"body": rug}
+    else:
+        return {"body": "No rug could be found. Please try again."}
