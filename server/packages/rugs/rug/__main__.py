@@ -2,9 +2,6 @@ import os
 from requests_oauthlib import OAuth2Session
 import base64
 import json
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def main(args):
     #main({"ID":"3183625000003900011"})
