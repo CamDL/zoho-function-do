@@ -4,10 +4,10 @@ packages:
       - name: rug
         runtime: 'python:default'
         limits:
-          timeout: 9000
+          timeout: 5000
   - name: sample
     actions:
       - name: hello
         runtime: 'python:default'
         limits:
-          timeout: 9000
+          timeout: 5000
