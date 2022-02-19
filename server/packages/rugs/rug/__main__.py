@@ -25,4 +25,4 @@ def main(args):
     client.refresh_token(refresh_url)
 
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
-    return {"body":rug}
+    return {"body": str(envars)}
