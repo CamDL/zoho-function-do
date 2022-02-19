@@ -5,7 +5,6 @@ def main(args):
     #main({"ID":"3183625000003900011"})
     ID = args.get("ID")
     client_id = os.environ.get('CLIENT_ID')
-    print(client_id)
     client_secret = os.environ.get('CLIENT_SECRET')
 
     token = {
@@ -26,6 +25,7 @@ def main(args):
 
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
     if rug:
-        return {"body": rug}
+        message = rug
     else:
-        return {"body": "No rug could be found. Please try again."}
+        message = "No rug could be found. Sorry!"
+    return {"body": message}
