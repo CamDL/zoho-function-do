@@ -1,9 +1,11 @@
 import os
 from requests_oauthlib import OAuth2Session
+import base64
 
 def main(args):
     #main({"ID":"3183625000003900011"})
     ID = args.get("ID")
+    ID = "3183625000003900011"
     client_id = os.environ.get('CLIENT_ID')
     client_secret = os.environ.get('CLIENT_SECRET')
 
@@ -25,6 +27,13 @@ def main(args):
 
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
     if rug:
+        for item in list(rug['data']):
+            if "Image" in item:
+                value = rug['data'][item]
+                response = client.get(f"https://creator.zoho.com{value}")
+                uri = ("data:" + response.headers['Content-Type'] + ";"
+                    + "base64," + str(base64.b64encode(response.content).decode('utf-8')))
+                rug['data'][value + "_URI"] = uri
         message = rug
     else:
         message = "No rug could be found. Sorry!"
