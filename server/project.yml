@@ -4,4 +4,4 @@ packages:
       - name: rug
         runtime: 'python:default'
         limits:
-          timeout: 5000
+          timeout: 50000
