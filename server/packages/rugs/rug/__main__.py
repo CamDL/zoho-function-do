@@ -22,8 +22,7 @@ def main(args):
         'client_id': client_id,
         'client_secret': client_secret,
     }
-    client = OAuth2Session(client_id, token=token, auto_refresh_url=refresh_url,
-        auto_refresh_kwargs=extra, token_updater=token_saver)
+    client = OAuth2Session(client_id, token=token, auto_refresh_url=refresh_url, auto_refresh_kwargs=extra, token_updater=token_saver)
 
     client.refresh_token(refresh_url)
 
