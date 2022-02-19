@@ -6,6 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
+        <img src = "https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/3183625000003900011/Image_1/download?filepath=1645019025118_Image_1.jpg" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
