@@ -20,6 +20,9 @@ packages:
         limits:
           timeout: 5000
   - name: files
+    environment:
+      SPACES_KEY: "${SPACES_KEY}"
+      SPACES_SECRET: "${SPACES_SECRET}"
     actions:
       - name: list
         runtime: 'python:default'
