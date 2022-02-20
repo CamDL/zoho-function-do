@@ -1,8 +1,5 @@
 import os
 import boto3
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def main(args):
     bucket = 'cdl-doserverless'
