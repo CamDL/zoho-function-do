@@ -27,9 +27,9 @@ def main(args):
         image.save(img_byte_arr, format='JPEG')
         resized = img_byte_arr.getvalue()
         response = client.put_object(Bucket=bucket,
-        Key= prefix+'_'+file,
-        Body=resized,
-        ACL='private')
-        return {"body" : response}
+            Key= prefix+'_'+file,
+            Body=resized,
+            ACL='private')
+        return {"body" : "Image saved!"}
     else:
         return {"body" : "No file was specified."}
