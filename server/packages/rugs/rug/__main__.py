@@ -76,7 +76,6 @@ def main(args):
     client = initialize_connection()
     rug = get_rug(client,ID)
     if rug:
-        get_images(rug,client)
         return { "body": rug }
     else:
         message = "No rug could be found. Sorry!"
