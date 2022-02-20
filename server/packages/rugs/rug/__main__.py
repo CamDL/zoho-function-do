@@ -40,7 +40,7 @@ def main(args):
                 url = f'https://creator.zohopublic.com/troylusk/cleaning-process/Rug_Inspection_Report/{ID}/{item}/image-download/{report_key}/{file_path}'
                 rug['data'][item] = url
         message = json.dumps(rug['data'])
-        return message
+        return {"body": message}
     else:
         message = "No rug could be found. Sorry!"
         return {"body": message}
