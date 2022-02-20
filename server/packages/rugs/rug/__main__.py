@@ -2,7 +2,6 @@ import os
 from requests_oauthlib import OAuth2Session
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
-import json
 
 def main(args):
     #main({"ID":"3183625000003900011"})
@@ -39,7 +38,7 @@ def main(args):
                 file_path = parse_qs(parsed.query)['filepath'][0]
                 url = f'https://creator.zohopublic.com/troylusk/cleaning-process/Rug_Inspection_Report/{ID}/{item}/image-download/{report_key}/{file_path}'
                 rug['data'][item] = url
-        message = json.dumps(rug['data'])
+        message = rug
         return {"body": message}
     else:
         message = "No rug could be found. Sorry!"
