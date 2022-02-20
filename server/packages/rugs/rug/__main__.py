@@ -1,4 +1,3 @@
-from ast import parse
 import os
 from requests_oauthlib import OAuth2Session
 from urllib.parse import urlparse
