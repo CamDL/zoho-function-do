@@ -54,7 +54,7 @@ def main(args):
                 response = client.get(base_url + value)
                 url = store_image(ID, item, response)
                 rug['data'][item] = url
-        return { "body": message }
+        return { "body": rug }
     else:
         message = "No rug could be found. Sorry!"
         return {"body": message}
