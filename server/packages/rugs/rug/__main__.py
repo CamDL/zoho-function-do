@@ -1,6 +1,11 @@
+from ast import parse
 import os
 from requests_oauthlib import OAuth2Session
-import json
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def main(args):
     #main({"ID":"3183625000003900011"})
@@ -8,6 +13,8 @@ def main(args):
 
     client_id = os.environ.get('CLIENT_ID')
     client_secret = os.environ.get('CLIENT_SECRET')
+
+    report_key = 'yMR3JSmwXqZq3B5jEt5fDON0z24R7R8HNZD7058ktb2EdTU93UbjS7V4sbpPMPaMrZVe3RGk4yhxGk8usFO540B6EhwrrVtyADxY'
 
     token = {
         'access_token': os.environ.get('ACCESS_TOKEN'),
@@ -26,8 +33,15 @@ def main(args):
     client.refresh_token(refresh_url)
 
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
-    
+
     if rug:
+        for item in list(rug['data']):
+            if "Image" in item:
+                value = rug['data'][item]
+                parsed = urlparse(value)
+                file_path = parse_qs(parsed.query)['filepath'][0]
+                url = f'https://creator.zohopublic.com/troylusk/cleaning-process/Rug_Inspection_Report/{ID}/{item}/image-download/{report_key}/{file_path}'
+                rug['data'][item] = url
         message = rug
         return {"body": message}
     else:
