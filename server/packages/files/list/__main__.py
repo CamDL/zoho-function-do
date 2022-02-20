@@ -14,4 +14,4 @@ def main(args):
     response = client.list_objects(Bucket=bucket)
     for obj in response['Contents']:
         files.append(obj['Key'])
-    return files
+    return {"body" : files}
