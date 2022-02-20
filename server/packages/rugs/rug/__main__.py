@@ -49,12 +49,14 @@ def main(args):
 
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
     if rug:
+        """
         for item in list(rug['data']):
             if "Image" in item:
                 value = rug['data'][item]
                 response = client.get(base_url + value)
                 url = store_image(ID, item, response)
                 rug['data'][item] = url
+        """
         message = json.dumps(rug)
         return message
     else:
