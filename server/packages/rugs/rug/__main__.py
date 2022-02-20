@@ -28,7 +28,7 @@ def main(args):
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
     if rug:
         message = rug
-        return message
+        return {"body": message}
     else:
         message = "No rug could be found. Sorry!"
         return {"body": message}
