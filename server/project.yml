@@ -6,6 +6,8 @@ packages:
       ACCESS_TOKEN: "${ACCESS_TOKEN}"
       REFRESH_TOKEN: "${REFRESH_TOKEN}"
       EXPIRES_IN: "${EXPIRES_IN}"
+      SPACES_KEY: "${SPACES_KEY}"
+      SPACES_SECRET: "${SPACES_SECRET}"
     actions:
       - name: rug
         runtime: 'python:default'
