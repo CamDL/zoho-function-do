@@ -28,3 +28,7 @@ packages:
         runtime: 'python:default'
         limits:
           timeout: 5000
+      - name: resize
+        runtime: 'python:default'
+        limits:
+          timeout: 5000
