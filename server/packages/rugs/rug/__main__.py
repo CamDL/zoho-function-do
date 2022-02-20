@@ -4,6 +4,7 @@ import json
 import boto3
 import mimetypes
 
+"""
 def store_image(id, field, response):
     bucket = 'cdl-doserverless'
     s3session = boto3.session.Session()
@@ -20,6 +21,7 @@ def store_image(id, field, response):
     url = s3client.generate_presigned_url(ClientMethod='get_object',
         Params={'Bucket': bucket, 'Key': key, 'ResponseContentDisposition' : 'inline; filename=image.jpg'}, ExpiresIn=300)
     return url
+"""
 
 
 def main(args):
