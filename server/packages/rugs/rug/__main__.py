@@ -36,33 +36,39 @@ def get_rug(client, id):
         return None
 
 def get_images(rug, client):
-    base_url = 'https://creator.zoho.com'
-    id = rug['data']['ID']
-    for item in list(rug['data']):
-        if "Image" in item:
-            value = rug['data'][item]
-            response = client.get(base_url + value)
-            url = store_image(id, item, response)
-            rug['data'][item] = url
-    return rug
+    try:
+        base_url = 'https://creator.zoho.com'
+        id = rug['data']['ID']
+        for item in list(rug['data']):
+            if "Image" in item:
+                value = rug['data'][item]
+                response = client.get(base_url + value)
+                url = store_image(id, item, response)
+                rug['data'][item] = url
+        return rug
+    except:
+        return 'Could not find images'
 
 
 def store_image(id, field, response):
-    bucket = 'cdl-doserverless'
-    s3session = boto3.session.Session()
-    s3client = s3session.client('s3', region_name='nyc3',
-        endpoint_url='https://nyc3.digitaloceanspaces.com',
-        aws_access_key_id=os.environ.get('SPACES_KEY'),
-        aws_secret_access_key=os.environ.get('SPACES_SECRET'))
-    ext = mimetypes.guess_extension(response.headers['Content-Type'].partition(';')[0].strip())
-    key = f'{id}_{field}.{ext}'
-    s3client.put_object(Bucket=bucket,
-        Key=key,
-        Body=response.content,
-        ACL='private')
-    url = s3client.generate_presigned_url(ClientMethod='get_object',
-        Params={'Bucket': bucket, 'Key': key, 'ResponseContentDisposition' : 'inline; filename=image.jpg'}, ExpiresIn=300)
-    return url
+    try:
+        bucket = 'cdl-doserverless'
+        s3session = boto3.session.Session()
+        s3client = s3session.client('s3', region_name='nyc3',
+            endpoint_url='https://nyc3.digitaloceanspaces.com',
+            aws_access_key_id=os.environ.get('SPACES_KEY'),
+            aws_secret_access_key=os.environ.get('SPACES_SECRET'))
+        ext = mimetypes.guess_extension(response.headers['Content-Type'].partition(';')[0].strip())
+        key = f'{id}_{field}.{ext}'
+        s3client.put_object(Bucket=bucket,
+            Key=key,
+            Body=response.content,
+            ACL='private')
+        url = s3client.generate_presigned_url(ClientMethod='get_object',
+            Params={'Bucket': bucket, 'Key': key, 'ResponseContentDisposition' : 'inline; filename=image.jpg'}, ExpiresIn=300)
+        return url
+    except:
+        return 'Could not transfer images'
 
 def main(args):
     #main({"ID":"3183625000003900011"})
