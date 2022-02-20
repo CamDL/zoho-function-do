@@ -4,6 +4,49 @@ import json
 import boto3
 import mimetypes
 
+def initialize_connection():
+    try:
+        client_id = os.environ.get('CLIENT_ID')
+        client_secret = os.environ.get('CLIENT_SECRET')
+
+        token = {
+            'access_token': os.environ.get('ACCESS_TOKEN'),
+            'refresh_token': os.environ.get('REFRESH_TOKEN'),
+            'token_type': 'Bearer',
+            'expires_in': os.environ.get('EXPIRES_IN'),
+        }
+        refresh_url = 'https://accounts.zoho.com/oauth/v2/token'
+        extra = {
+            'client_id': client_id,
+            'client_secret': client_secret,
+        }
+        client = OAuth2Session(client_id, token=token, auto_refresh_url=refresh_url,
+            auto_refresh_kwargs=extra)
+
+        client.refresh_token(refresh_url)
+        return client
+    except:
+        return None
+
+def get_rug(client, id):
+    try:
+        rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{id}").json()
+        return rug
+    except:
+        return None
+
+def get_images(rug, client):
+    base_url = 'https://creator.zoho.com'
+    id = rug['data']['ID']
+    for item in list(rug['data']):
+        if "Image" in item:
+            value = rug['data'][item]
+            response = client.get(base_url + value)
+            url = store_image(id, item, response)
+            rug['data'][item] = url
+    return rug
+
+
 def store_image(id, field, response):
     bucket = 'cdl-doserverless'
     s3session = boto3.session.Session()
@@ -24,36 +67,10 @@ def store_image(id, field, response):
 def main(args):
     #main({"ID":"3183625000003900011"})
     ID = args.get("ID")
-
-    client_id = os.environ.get('CLIENT_ID')
-    client_secret = os.environ.get('CLIENT_SECRET')
-
-    base_url = 'https://creator.zoho.com'
-
-    token = {
-        'access_token': os.environ.get('ACCESS_TOKEN'),
-        'refresh_token': os.environ.get('REFRESH_TOKEN'),
-        'token_type': 'Bearer',
-        'expires_in': os.environ.get('EXPIRES_IN'),
-    }
-    refresh_url = 'https://accounts.zoho.com/oauth/v2/token'
-    extra = {
-        'client_id': client_id,
-        'client_secret': client_secret,
-    }
-    client = OAuth2Session(client_id, token=token, auto_refresh_url=refresh_url,
-        auto_refresh_kwargs=extra)
-
-    client.refresh_token(refresh_url)
-
-    rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
+    client = initialize_connection()
+    rug = get_rug(client,ID)
     if rug:
-        for item in list(rug['data']):
-            if "Image" in item:
-                value = rug['data'][item]
-                response = client.get(base_url + value)
-                url = store_image(ID, item, response)
-                rug['data'][item] = url
+        get_images(rug,client)
         return { "body": rug }
     else:
         message = "No rug could be found. Sorry!"
