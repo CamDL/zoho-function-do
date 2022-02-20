@@ -4,8 +4,13 @@ import json
 import boto3
 import mimetypes
 
-def store_image(id, field, path):
-    response = client.get(path)
+def store_image(id, field, response):
+    bucket = 'cdl-doserverless'
+    s3session = boto3.session.Session()
+    s3client = s3session.client('s3', region_name='nyc3',
+        endpoint_url='https://nyc3.digitaloceanspaces.com',
+        aws_access_key_id=os.getenv('SPACES_KEY'),
+        aws_secret_access_key=os.getenv('SPACES_SECRET'))
     ext = mimetypes.guess_extension(response.headers['Content-Type'].partition(';')[0].strip())
     key = f'{id}_{field}.{ext}'
     s3client.put_object(Bucket=bucket,
@@ -42,21 +47,15 @@ def main(args):
 
     client.refresh_token(refresh_url)
 
-    bucket = 'cdl-doserverless'
-    s3session = boto3.session.Session()
-    s3client = s3session.client('s3', region_name='nyc3',
-        endpoint_url='https://nyc3.digitaloceanspaces.com',
-        aws_access_key_id=os.getenv('SPACES_KEY'),
-        aws_secret_access_key=os.getenv('SPACES_SECRET'))
-
     rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
     if rug:
         for item in list(rug['data']):
             if "Image" in item:
                 value = rug['data'][item]
-                url = store_image(ID, item, base_url + value)
+                response = client.get(base_url + value)
+                url = store_image(ID, item, response)
                 rug['data'][item] = url
-        message = str(json.dumps(rug))
+        message = json.dumps(rug)
         return message
     else:
         message = "No rug could be found. Sorry!"
