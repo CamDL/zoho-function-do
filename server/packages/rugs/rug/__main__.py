@@ -1,5 +1,6 @@
 import os
 from requests_oauthlib import OAuth2Session
+import json
 
 def main(args):
     #main({"ID":"3183625000003900011"})
@@ -23,11 +24,11 @@ def main(args):
         auto_refresh_kwargs=extra)
 
     client.refresh_token(refresh_url)
-    
-    rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
 
+    rug = client.get(f"https://creator.zoho.com/api/v2/troylusk/cleaning-process/report/Rug_Information_Report/{ID}").json()
     if rug:
-        return { "body": rug }
+        message = rug
+        return {"body": message}
     else:
         message = "No rug could be found. Sorry!"
         return {"body": message}
