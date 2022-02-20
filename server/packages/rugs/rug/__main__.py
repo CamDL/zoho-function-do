@@ -3,9 +3,6 @@ import os
 from requests_oauthlib import OAuth2Session
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def main(args):
     #main({"ID":"3183625000003900011"})
